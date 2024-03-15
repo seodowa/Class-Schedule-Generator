@@ -1,5 +1,5 @@
 # Class-Schedule-Generator
-#### Video Demo:  <URL HERE>
+[Video Demo](https://youtu.be/B9keBYvS-nQ)
 ## Description
 This project serves as my final project for CS50x. It generates a class schedule for you in a Word file. The project was made with Python and QT library (PyQT6). The GUI was made with the help of QT Designer. Inspired by Tech With Tim's [Schedule-Creator](https://github.com/techwithtim/Schedule-Creator).
 
