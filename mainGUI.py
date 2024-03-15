@@ -255,7 +255,7 @@ class Ui_MainWindow(object):
     def generateSchedule(self):
         self.saveFileName = self.filenameInput.text()
 
-        if self.saveFileName.lower() == "template":
+        if (self.saveFileName.lower() == "template") or (self.saveFileName.strip() == ""):
             self.generateSchedulePopup(3) 
             return
         
@@ -291,6 +291,10 @@ class Ui_MainWindow(object):
             case 3:
                 msg.setWindowTitle("Unsuccessful")
                 msg.setText("Please name the output file anything but template.docx.")
+                msg.setIcon(QMessageBox.Icon.Warning)
+            case 4:
+                msg.setWindowTitle("Unsuccessful")
+                msg.setText("Failed to generate schedule. Make sure you have added a schedule before generating the schedule.")
                 msg.setIcon(QMessageBox.Icon.Warning)
             case _:
                 msg.setWindowTitle("Successful")

@@ -30,14 +30,21 @@ def insert_sched(day: str, subject: str, start_time: str, end_time: str, documen
                     return 0
     return 1
 
-def sortSched(schedList: list):
+def sortSched(schedList: list) -> int:
+    if len(schedList) == 0:
+        return 1
+    
     schedList.sort(key=lambda x: x[2])
     for i in range(len(schedList)):
         schedList[i][2] = time.strftime("%I:%M %p", schedList[i][2])
 
-def generate_sched(saveFileName: str, loadFileName: str) -> int:
-    sortSched(ADD_SCHEDS)
+    return 0
 
+def generate_sched(saveFileName: str, loadFileName: str) -> int:
+    sortFailed = sortSched(ADD_SCHEDS)
+    if sortFailed:
+        return 4
+    
     try:
         # open the template file
         # make sure not to overwrite template.docx!!
@@ -55,6 +62,10 @@ def generate_sched(saveFileName: str, loadFileName: str) -> int:
     try:
         document.save(f"Schedules/{saveFileName}.docx")
     except PermissionError:
+        for i in range(len(ADD_SCHEDS)):
+            # revert the start time in string format back to struct_time format since sortSched() already converted the start time to string format
+            # this is to avoid a type error in converting to and from struct_time format
+            ADD_SCHEDS[i][2] = time.strptime(ADD_SCHEDS[i][2], "%I:%M %p") 
         return 2
     
     # clear the ADD_SCHEDS array
