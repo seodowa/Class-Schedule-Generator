@@ -13,15 +13,18 @@ def insert_sched(
     header_cells = table.rows[0].cells
 
     for column in range(len(header_cells)):
+
         # look for a certain column of a certain day
         if header_cells[column].text == day:
+
+            # check each cell in that column starting below the header
             for row in range(1, len(table.columns[column].cells)):
+
                 # check if the cell is empty
                 if table.columns[column].cells[row].text.strip() == "":
+
                     # put text in that cell and center it in the cell
-                    table.columns[column].cells[
-                        row
-                    ].text = f"{subject}\n({start_time} - {end_time})"
+                    table.columns[column].cells[row].text = f"{subject}\n({start_time} - {end_time})"
                     p = table.columns[column].cells[row].paragraphs[0]
                     p.alignment = WD_TABLE_ALIGNMENT.CENTER
                     return 0
@@ -29,9 +32,7 @@ def insert_sched(
                 # if it's the last cell in the column and it is not blank, then create a new row and place the text there
                 if row == len(table.columns[column].cells) - 1:
                     table.add_row().cells
-                    table.columns[column].cells[
-                        row + 1
-                    ].text = f"{subject}\n({start_time} - {end_time})"
+                    table.columns[column].cells[row + 1].text = f"{subject}\n({start_time} - {end_time})"
                     p = table.columns[column].cells[row + 1].paragraphs[0]
                     p.alignment = WD_TABLE_ALIGNMENT.CENTER
                     return 0
