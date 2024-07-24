@@ -58,7 +58,8 @@ def generate_sched(saveFileName: str, loadFileName: str) -> int:
     try:
         # open the template file
         # make sure not to overwrite template.docx!!
-        document = Document(f"{os.getcwd()}/Schedules/{loadFileName}")
+        doc_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "Schedules")
+        document = Document(os.path.join(doc_path, loadFileName))
 
         for day, subject, startTime, endTime in ADD_SCHEDS:
             insertFailed = insert_sched(day, subject, startTime, endTime, document)
@@ -67,7 +68,7 @@ def generate_sched(saveFileName: str, loadFileName: str) -> int:
         if insertFailed:
             return 1
 
-        document.save(f"Schedules/{saveFileName}.docx")
+        document.save(os.path.join(doc_path, f"{saveFileName}.docx"))
 
     except PackageNotFoundError:
         print("Invalid document.")
